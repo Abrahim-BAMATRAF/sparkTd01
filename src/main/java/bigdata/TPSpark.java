@@ -8,7 +8,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.util.StatCounter;
 import scala.Tuple2;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class TPSpark {
 
@@ -86,6 +86,17 @@ public class TPSpark {
         for (long x : histogram._2){
             System.out.println("The bucket " + index++ + " has : " + x + " elements.");
         }
-    }
 
+        //-----------------Top K cities---------------------------------
+
+        List<Tuple2<String, Integer>> topKList =  cityPopPairs.top(10, new TopKComparator());
+
+        System.out.println("---------------------------------------");
+        System.out.println("Printing the topK elements");
+        for (Tuple2 pair : topKList) {
+            System.out.println("City : " + pair._1 +" , Population : " + pair._2);
+        }
+
+        //--------------------------------------------------------
+    }
 }
